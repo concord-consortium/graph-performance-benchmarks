@@ -44,10 +44,11 @@ const Points = () => {
     <sprite ref={el => spriteRef.current[i] = el} key={i} position={[point.x, point.y, 0]} scale={[5, 5, 1]}>
       <spriteMaterial attach="material" map={texture} />
     </sprite>
+    // THREE.Sprite
   ));
 };
 
-export const AppReactThreeFiber = () => {
+export const AppReactThreeFiberRefs = () => {
   return (
     <div className="app">
       <div style={{ width: WIDTH, height: HEIGHT }}>

@@ -44,19 +44,21 @@ export const getSVGElement = () => {
   return svg;
 };
 
-export const getCanvas = () => {
+export const getCanvas = ({ devicePixelRatio }: { devicePixelRatio: number } = { devicePixelRatio: 2 }) => {
   const app = document.createElement("div");
   app.setAttribute("class", "app");
 
   const canvas = document.createElement("canvas");
   // Setup support for HDPI displays so it's more comparable to SVG quality.
-  const devicePixelRatio = 2;
   canvas.setAttribute("width", (WIDTH * devicePixelRatio).toString());
   canvas.setAttribute("height", (HEIGHT * devicePixelRatio).toString());
   canvas.style.width = `${WIDTH}px`;
   canvas.style.height = `${HEIGHT}px`;
-  const ctx = canvas.getContext("2d");
-  ctx?.scale(devicePixelRatio, devicePixelRatio);
+
+  if (devicePixelRatio !== 1) {
+    const ctx = canvas.getContext("2d");
+    ctx?.scale(devicePixelRatio, devicePixelRatio);
+  }
 
   document.getElementById("app")?.appendChild(app);
   app.appendChild(canvas);

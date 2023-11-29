@@ -15,8 +15,12 @@ import { AppSVGMSTVolatile } from "./components/svg-mst-volatile";
 import { AppSVGMobxVolatile } from "./components/svg-mobx-volatile";
 import { AppCanvas } from "./components/canvas";
 import { AppCanvasReact } from "./components/canvas-react";
-import { AppReactThreeFiber } from "./components/react-three-fiber";
+import { AppReactThreeFiberRefs } from "./components/react-three-fiber-refs";
 import { AppReactThreeFiberReactState } from "./components/react-three-fiber-react-state";
+import { AppPixiGraphics } from "./components/pixi-graphics";
+import { AppPixiSprite } from "./components/pixi-sprite";
+import { AppPixiReactRefs } from "./components/pixi-react-refs";
+import { AppPixiReactState } from "./components/pixi-react-state";
 
 import "./index.scss";
 
@@ -38,8 +42,12 @@ const Apps: Record<string, React.FC | { main: () => void }> = {
   "svg-react-mst-volatile": AppSVGReactMSTVolatile,
   "canvas": AppCanvas,
   "canvas-react": AppCanvasReact,
-  "react-three-fiber": AppReactThreeFiber,
+  "react-three-fiber-refs": AppReactThreeFiberRefs,
   "react-three-fiber-react-state": AppReactThreeFiberReactState,
+  "pixi-graphics": AppPixiGraphics,
+  "pixi-sprite": AppPixiSprite,
+  "pixi-react-refs": AppPixiReactRefs,
+  "pixi-react-state": AppPixiReactState,
 };
 
 const container = document.getElementById("app");
