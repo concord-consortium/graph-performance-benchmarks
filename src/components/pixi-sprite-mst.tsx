@@ -1,11 +1,34 @@
 import * as PIXI from "pixi.js";
 import { getRandomPoints, shiftPoints, nextFrame, getCanvas, WIDTH, HEIGHT, benchmark } from "./shared";
+import { autorun } from "mobx";
+import { types } from "mobx-state-tree";
 
-export const AppPixiSprite = {
+const Point = types.model({
+  id: types.identifier,
+  x: types.number,
+  y: types.number
+});
+
+// Define a store just like a model
+const PointsStore = types.model({
+  points: types.array(Point),
+}).actions(self => ({
+  shiftPoints() {
+    shiftPoints(self.points);
+  }
+}));
+
+export const AppPixiSpriteMST = {
   main: () => {
+    const store = PointsStore.create({ points: getRandomPoints() });
+    const animate = () => {
+      store.shiftPoints();
+      nextFrame(animate);
+    };
+    animate();
+
     // pixi handles dpr by itself, so we need to set it to 1
     const canvas = getCanvas({ devicePixelRatio: 1 });
-
     const app = new PIXI.Application({
       view: canvas,
       width: WIDTH,
@@ -13,7 +36,6 @@ export const AppPixiSprite = {
       resolution: 2,
       backgroundColor: 0xdfdfdf
     });
-    const points = getRandomPoints();
 
     // Create a texture for the circle
     const graphics = new PIXI.Graphics();
@@ -24,21 +46,15 @@ export const AppPixiSprite = {
     const texture = app.renderer.generateTexture(graphics);
 
     // Create a sprite for each point
-    const sprites = points.map(() => new PIXI.Sprite(texture));
+    const sprites = store.points.map(() => new PIXI.Sprite(texture));
     sprites.forEach(sprite => app.stage.addChild(sprite));
 
-    const animate = () => {
-      shiftPoints(points);
-
-      for (let i = 0; i < points.length; i++) {
-        sprites[i].x = points[i].x;
-        sprites[i].y = points[i].y;
+    autorun(() => {
+      for (let i = 0; i < store.points.length; i++) {
+        sprites[i].x = store.points[i].x;
+        sprites[i].y = store.points[i].y;
       }
-
-      nextFrame(animate);
       benchmark();
-    };
-
-    animate();
+    });
   }
 };

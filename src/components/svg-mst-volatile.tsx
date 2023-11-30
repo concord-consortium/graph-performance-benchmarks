@@ -1,7 +1,6 @@
-import { getRandomPoints, shiftPoints, nextFrame, getSVGElement } from "./shared";
+import { getRandomPoints, shiftPoints, nextFrame, getSVGElement, benchmark } from "./shared";
 import { types } from "mobx-state-tree";
 import { autorun } from "mobx";
-import "./app.scss";
 
 const PointsStore = types.model({
   pointsUpdateFlag: 0
@@ -47,8 +46,7 @@ export const AppSVGMSTVolatile = {
         circle.setAttribute("cx", store.points[i].x.toString());
         circle.setAttribute("cy", store.points[i].y.toString());
       }
+      benchmark();
     });
-
-    return null;
   }
 };

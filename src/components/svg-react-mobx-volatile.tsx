@@ -1,26 +1,28 @@
 import React, { useEffect } from "react";
 import { HEIGHT, IPoint, WIDTH, getRandomPoints, shiftPoints, nextFrame, benchmark } from "./shared";
-import { types } from "mobx-state-tree";
 import { observer } from "mobx-react-lite";
+import { action, makeObservable, observable } from "mobx";
 
-const PointsStore = types.model({
-  pointsUpdateFlag: 0
-}).volatile(self => ({
-  points: getRandomPoints(),
-})).actions(self => ({
-  shiftPoints() {
-    shiftPoints(self.points);
-    self.pointsUpdateFlag++;
+
+class PointsStore {
+  @observable pointsUpdateFlag = 0;
+  points: IPoint[] = getRandomPoints();
+  constructor() {
+    makeObservable(this);
   }
-}));
+  @action shiftPoints() {
+    shiftPoints(this.points);
+    this.pointsUpdateFlag++;
+  }
+}
 
-const store = PointsStore.create({});
+const store = new PointsStore();
 const animate = () => {
   store.shiftPoints();
   nextFrame(animate);
 };
 
-export const AppSVGReactMSTVolatile = observer(() => {
+export const AppSVGReactMobxVolatile = observer(() => {
   useEffect(() => {
     animate();
   }, []);

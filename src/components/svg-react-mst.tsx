@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
-import { HEIGHT, IPoint, WIDTH, getRandomPoints, shiftPoints, nextFrame } from "./shared";
+import { HEIGHT, IPoint, WIDTH, getRandomPoints, shiftPoints, nextFrame, benchmark } from "./shared";
 import { types } from "mobx-state-tree";
 import { observer } from "mobx-react-lite";
-import "./app.scss";
 
 const Point = types.model({
   id: types.identifier,
@@ -45,13 +44,16 @@ export const AppSVGReactMST = observer(() => {
   );
 });
 
-const PointComp = observer(({ point }: { point: IPoint }) => (
-  <circle
+const PointComp = observer(({ point }: { point: IPoint }) => {
+  if (point.id === "id-0") {
+    benchmark();
+  }
+  return <circle
     r="2"
     fill="#333"
     strokeWidth="0.5"
     stroke="#ffa1a1"
     cx={point.x}
     cy={point.y}
-  />
-));
+  />;
+});

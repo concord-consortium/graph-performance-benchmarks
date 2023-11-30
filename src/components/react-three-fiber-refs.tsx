@@ -4,7 +4,6 @@ import { IPoint, getRandomPoints, shiftPoints, benchmark, WIDTH, HEIGHT } from "
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { TextureLoader } from "three";
 import { OrthographicCamera } from "@react-three/drei";
-import "./app.scss";
 
 const createCircleTexture = () => {
   const canvas = document.createElement("canvas");

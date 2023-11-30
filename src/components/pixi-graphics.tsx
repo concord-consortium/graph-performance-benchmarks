@@ -1,6 +1,5 @@
 import * as PIXI from "pixi.js";
-import { getRandomPoints, shiftPoints, nextFrame, getCanvas, WIDTH, HEIGHT } from "./shared";
-import "./app.scss";
+import { getRandomPoints, shiftPoints, nextFrame, getCanvas, WIDTH, HEIGHT, benchmark } from "./shared";
 
 export const AppPixiGraphics = {
   main: () => {
@@ -32,6 +31,7 @@ export const AppPixiGraphics = {
       }
 
       nextFrame(animate);
+      benchmark();
     };
 
     animate();

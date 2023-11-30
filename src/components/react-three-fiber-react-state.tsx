@@ -4,7 +4,6 @@ import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { TextureLoader } from "three";
 import { OrthographicCamera } from "@react-three/drei";
 import { IPoint, getRandomPoints, shiftPoints, benchmark, WIDTH, HEIGHT } from "./shared";
-import "./app.scss";
 
 const createCircleTexture = () => {
   const canvas = document.createElement("canvas");
@@ -31,12 +30,10 @@ const Points = () => {
 
   // Note that results may be bound to refresh rate of the screen, but useFrame is recommended approach.
   useFrame(() => {
-    const newPoints = points.slice();
-    shiftPoints(newPoints);
-    setPoints(newPoints);
-
-    benchmark();
+    setPoints(oldPoints => shiftPoints(oldPoints.slice()));
   });
+
+  benchmark();
 
   return points.map((point, i) => (
     <sprite key={i} position={[point.x, point.y, 0]} scale={[5, 5, 1]}>

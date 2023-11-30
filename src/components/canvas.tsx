@@ -1,5 +1,4 @@
-import { getRandomPoints, shiftPoints, nextFrame, getCanvas } from "./shared";
-import "./app.scss";
+import { getRandomPoints, shiftPoints, nextFrame, getCanvas, benchmark } from "./shared";
 
 export const AppCanvas = {
   main: () => {
@@ -23,6 +22,7 @@ export const AppCanvas = {
         }
       }
       nextFrame(animate);
+      benchmark();
     };
 
     animate();

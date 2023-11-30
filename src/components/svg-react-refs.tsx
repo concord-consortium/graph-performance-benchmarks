@@ -1,17 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
-import { HEIGHT, IPoint, WIDTH, getRandomPoints, shiftPoints, nextFrame, cancelFrame } from "./shared";
-import "./app.scss";
+import React, { useEffect, useRef } from "react";
+import { HEIGHT, IPoint, WIDTH, getRandomPoints, shiftPoints, nextFrame, cancelFrame, benchmark } from "./shared";
 
-export const AppSVGReactStateOnly = () => {
+export const AppSVGReactStateRefs = () => {
   const frameRef = useRef<number>(0);
   const svgRef = useRef<SVGSVGElement>(null);
-  const [points, setPoints] = useState<IPoint[]>(getRandomPoints);
+  const points = useRef<IPoint[]>(getRandomPoints());
 
   useEffect(() => {
     const animate = () => {
-      const newPoints = points.slice();
-      shiftPoints(newPoints);
-      setPoints(newPoints);
+      shiftPoints(points.current);
 
       const svg = svgRef.current;
       if (!svg) {
@@ -19,7 +16,7 @@ export const AppSVGReactStateOnly = () => {
       }
       if (svg.children.length === 0) {
         // Create circles, this happens only once
-        for (let i = 0; i < points.length; i++) {
+        for (let i = 0; i < points.current.length; i++) {
           const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
           circle.setAttribute("r", "2");
           circle.setAttribute("fill", "#333");
@@ -30,14 +27,15 @@ export const AppSVGReactStateOnly = () => {
       }
       for (let i = 0; i < svg.children.length; i++) {
         const circle = svg.children[i] as SVGCircleElement;
-        circle.setAttribute("cx", points[i].x.toString());
-        circle.setAttribute("cy", points[i].y.toString());
+        circle.setAttribute("cx", points.current[i].x.toString());
+        circle.setAttribute("cy", points.current[i].y.toString());
       }
       frameRef.current = nextFrame(animate);
+      benchmark();
     };
     animate();
     return () => cancelFrame(frameRef.current);
-  }, [points]);
+  }, []);
 
   return (
     <div className="app">

@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { Graphics, RenderTexture } from "pixi.js";
 import { Stage, Sprite, useApp, useTick } from "@pixi/react";
 import { getRandomPoints, shiftPoints, WIDTH, HEIGHT, benchmark, IPoint } from "./shared";
-import "./app.scss";
 
 const CircleSprites = () => {
   const app = useApp();

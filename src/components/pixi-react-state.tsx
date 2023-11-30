@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Graphics, RenderTexture } from "pixi.js";
 import { Stage, Sprite, useApp, useTick } from "@pixi/react";
 import { getRandomPoints, shiftPoints, WIDTH, HEIGHT, benchmark } from "./shared";
-import "./app.scss";
 
 const CircleSprites = () => {
   const app = useApp();
@@ -20,11 +19,10 @@ const CircleSprites = () => {
   }, [app]);
 
   useTick(() => {
-    const newPoints = points.slice();
-    shiftPoints(newPoints);
-    setPoints(newPoints);
-    benchmark();
+    setPoints(oldPoints => shiftPoints(oldPoints.slice()));
   });
+
+  benchmark();
 
   return texture ? points.map((point, index) => (
     <Sprite key={index} texture={texture} x={point.x} y={point.y} />

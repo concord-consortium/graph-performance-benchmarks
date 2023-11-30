@@ -1,13 +1,19 @@
-import { getRandomPoints, getSVGElement, shiftPoints, nextFrame, benchmark } from "./shared";
+import React, { useEffect, useRef, useState } from "react";
+import { HEIGHT, IPoint, WIDTH, getRandomPoints, shiftPoints, nextFrame, cancelFrame, benchmark } from "./shared";
 
-export const AppSVG = {
-  main: () => {
-    const svg = getSVGElement();
-    const points = getRandomPoints();
+export const AppSVGReactState = () => {
+  const frameRef = useRef<number>(0);
+  const svgRef = useRef<SVGSVGElement>(null);
+  const [points, setPoints] = useState<IPoint[]>(getRandomPoints);
 
+  useEffect(() => {
     const animate = () => {
-      shiftPoints(points);
+      setPoints(oldPoints => shiftPoints(oldPoints.slice()));
 
+      const svg = svgRef.current;
+      if (!svg) {
+        return;
+      }
       if (svg.children.length === 0) {
         // Create circles, this happens only once
         for (let i = 0; i < points.length; i++) {
@@ -24,10 +30,17 @@ export const AppSVG = {
         circle.setAttribute("cx", points[i].x.toString());
         circle.setAttribute("cy", points[i].y.toString());
       }
-      nextFrame(animate);
-      benchmark();
+      frameRef.current = nextFrame(animate);
     };
-
     animate();
-  }
+    return () => cancelFrame(frameRef.current);
+  }, [points]);
+
+  benchmark();
+
+  return (
+    <div className="app">
+      <svg width={WIDTH} height={HEIGHT} ref={svgRef} />
+    </div>
+  );
 };

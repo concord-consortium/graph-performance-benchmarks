@@ -1,6 +1,5 @@
-import { IPoint, getRandomPoints, getSVGElement, shiftPoints, nextFrame } from "./shared";
+import { IPoint, getRandomPoints, getSVGElement, shiftPoints, nextFrame, benchmark } from "./shared";
 import * as d3 from "d3";
-import "./app.scss";
 
 export const AppSVGD3 = {
   main: () => {
@@ -28,6 +27,7 @@ export const AppSVGD3 = {
       circles.exit().remove();
 
       nextFrame(animate);
+      benchmark();
     };
 
     animate();

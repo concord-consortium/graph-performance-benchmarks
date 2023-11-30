@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
-import { HEIGHT, IPoint, WIDTH, getRandomPoints, shiftPoints, nextFrame } from "./shared";
+import { HEIGHT, IPoint, WIDTH, getRandomPoints, shiftPoints, nextFrame, benchmark } from "./shared";
 import { makeObservable, observable, action } from "mobx";
 import { observer } from "mobx-react-lite";
-import "./app.scss";
 
 // We probably don't want to design apps like this, but it's interesting to see how fast it can be. svg-react-mobx-2 is
 // probably a better approach, especially when it's not known how many points will be updated each frame.
@@ -31,6 +30,8 @@ export const AppSVGReactMobx = observer(() => {
   useEffect(() => {
     animate();
   }, []);
+
+  benchmark();
 
   return (
     <div className="app">

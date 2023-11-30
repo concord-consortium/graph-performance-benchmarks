@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { HEIGHT, IPoint, WIDTH, getRandomPoints, shiftPoints, nextFrame, cancelFrame } from "./shared";
-import "./app.scss";
+import { HEIGHT, IPoint, WIDTH, getRandomPoints, shiftPoints, nextFrame, cancelFrame, benchmark } from "./shared";
 
 export const AppCanvasReact = () => {
   const frameRef = useRef<number>(0);
@@ -8,10 +7,16 @@ export const AppCanvasReact = () => {
   const [points, setPoints] = useState<IPoint[]>(getRandomPoints);
 
   useEffect(() => {
+    const ctx = canvasRef.current?.getContext("2d");
+    if (ctx) {
+      const devicePixelRatio = 2;
+      ctx?.scale(devicePixelRatio, devicePixelRatio);
+    }
+  }, []);
+
+  useEffect(() => {
     const animate = () => {
-      const newPoints = points.slice();
-      shiftPoints(newPoints);
-      setPoints(newPoints);
+      setPoints(oldPoints => shiftPoints(oldPoints.slice()));
 
       const canvas = canvasRef.current;
       if (!canvas) {
@@ -39,9 +44,11 @@ export const AppCanvasReact = () => {
     return () => cancelFrame(frameRef.current);
   }, [points]);
 
+  benchmark();
+
   return (
     <div className="app">
-      <canvas width={WIDTH} height={HEIGHT} ref={canvasRef} />
+      <canvas width={WIDTH * 2} height={HEIGHT * 2} style={{ width: WIDTH, height: HEIGHT }} ref={canvasRef} />
     </div>
   );
 };

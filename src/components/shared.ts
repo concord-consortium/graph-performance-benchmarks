@@ -1,4 +1,9 @@
-export const COUNT = 10000;
+const urlParams = new URLSearchParams(window.location.search);
+
+// setTimeout can be used when FPS is limited by the screen refresh rate.
+const frameFunction = urlParams.get("frame") === "setTimeout" ? setTimeout : requestAnimationFrame;
+
+export const COUNT = Number(urlParams.get("count")) || 10000;
 export const WIDTH = 600;
 export const HEIGHT = 400;
 
@@ -21,13 +26,17 @@ export const getRandomPoints = () => {
 };
 
 const UPDATE_RATIO = 1;
-export const shiftPoints = (points: IPoint[]) => {
+export const shiftPoints = (points: IPoint[], modifier?: () => number) => {
+  if (!modifier) {
+    modifier = () => Math.random() < 0.5 ? 1 : -1;
+  }
   for (let i = 0; i < points.length; i++) {
     if (Math.random() < UPDATE_RATIO) {
-      points[i].x += Math.random() * 2 - 1;
-      points[i].y += Math.random() * 2 - 1;
+      points[i].x += (Math.random() * 2 - 1) * modifier();
+      points[i].y += (Math.random() * 2 - 1) * modifier();
     }
   }
+  return points;
 };
 
 export const getSVGElement = () => {
@@ -66,7 +75,7 @@ export const getCanvas = ({ devicePixelRatio }: { devicePixelRatio: number } = {
   return canvas;
 };
 
-const BENCHMARK_FRAME = 100;
+const BENCHMARK_FRAME = 50;
 const deltas: number[] = new Array(BENCHMARK_FRAME).fill(0);
 let bi = 0;
 let sum = 0;
@@ -91,9 +100,7 @@ export const benchmark = () => {
 };
 
 export const nextFrame = (fn: () => void) => {
-  benchmark();
-  return requestAnimationFrame(fn);
-  // return setTimeout(fn);
+  return frameFunction(fn);
 };
 
 export const cancelFrame = (id: number) => {
