@@ -32,6 +32,7 @@ import { AppSVGReactComponentsRefs } from "./apps/svg-react-components-refs";
 import { AppSVGReactMobxVolatile } from "./apps/svg-react-mobx-volatile";
 
 import "./index.scss";
+import { AppSVGMSTSnapshot } from "./apps/svg-mst-snapshot";
 
 const urlParamPage = new URLSearchParams(window.location.search).get("page");
 
@@ -47,6 +48,7 @@ const Apps: Record<string, React.FC | { main: () => void }> = {
   "svg-mobx": AppSVGMobx,
   "svg-mobx-volatile": AppSVGMobxVolatile,
   "svg-mst": AppSVGMST,
+  "svg-mst-snapshot": AppSVGMSTSnapshot,
   "svg-mst-volatile": AppSVGMSTVolatile,
   "svg-mst-volatile-observables": AppSVGMSTVolatileObservables,
   "svg-react-mobx": AppSVGReactMobx,
