@@ -1,7 +1,7 @@
 {
-  "name": "starter-projects",
+  "name": "graph-performance-benchmarks",
   "version": "0.0.1",
-  "description": "Concord Consortium starter projects",
+  "description": "Concord Consortium graph performance benchmarks",
   "main": "index.js",
   "browserslist": "> 0.2%, last 5 versions, Firefox ESR, not dead, not ie > 0",
   "jest": {
@@ -60,14 +60,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/concord-consortium/starter-projects.git"
+    "url": "git+https://github.com/concord-consortium/graph-performance-benchmarks.git"
   },
   "author": "Concord Consortium",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/concord-consortium/starter-projects/issues"
+    "url": "https://github.com/concord-consortium/graph-performance-benchmarks/issues"
   },
-  "homepage": "https://github.com/concord-consortium/starter-projects#readme",
+  "homepage": "https://github.com/concord-consortium/graph-performance-benchmarks#readme",
   "nyc": {
     "extends": "@istanbuljs/nyc-config-typescript",
     "all": true,

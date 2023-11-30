@@ -1,4 +1,4 @@
-# Starter Projects
+# Graph Performance Benchmarks
 
 ## Development
 
@@ -7,7 +7,7 @@
 1. Create a new public repository for your project (e.g. `new-repository`)
 2. Create a clone of the starter repo
     ```
-    git clone --single-branch https://github.com/concord-consortium/starter-projects.git new-repository
+    git clone --single-branch https://github.com/concord-consortium/graph-performance-benchmarks.git new-repository
     ```
 3. Update the starter repo
 
@@ -24,7 +24,7 @@
     npm run test:full
     ```
     If the updates are functional, please commit any changes to `package.json` or `package-lock.json` back to the
-    Starter Projects repository for future use.
+    Graph Performance Benchmarks repository for future use.
 
 4. Next, re-initialize the repo to create a new history
     ```
@@ -41,7 +41,7 @@
     git remote add origin https://github.com/concord-consortium/new-repository.git
     git push -u origin master
     ```
-7. Open your new repository and update all instances of `starter-projects` to `new-repository` and `Starter Projects` to `New Repository`.
+7. Open your new repository and update all instances of `graph-performance-benchmarks` to `new-repository` and `Graph Performance Benchmarks` to `New Repository`.
    Note: this will do some of the configuration for GitHub Actions deployment to S3, but you'll still need to follow
    the instructions [here](https://docs.google.com/document/d/e/2PACX-1vTpYjbGmUMxk_FswUmapK_RzVyEtm1WdnFcNByp9mqwHnp0nR_EzRUOiubuUCsGwzQgOnut_UiabYOM/pub).
 8. To record the cypress tests results to the cypress dashboard service:
@@ -95,10 +95,10 @@ See also `s3_deploy.sh`, and `./github/ci.yml`.
 Production releases to S3 are based on the contents of the /dist folder and are built automatically by GitHub Actions
 for each branch and tag pushed to GitHub.
 
-Branches are deployed to http://starter-projects.concord.org/branch/<name>.
+Branches are deployed to http://graph-performance-benchmarks.concord.org/branch/<name>.
 If the branch name starts or ends with a number this number is stripped off.
 
-Tags are deployed to http://starter-projects.concord.org/version/<name>.
+Tags are deployed to http://graph-performance-benchmarks.concord.org/version/<name>.
 
 To deploy a production release:
 
@@ -111,10 +111,10 @@ To deploy a production release:
 7. Checkout master and pull
 8. Create an annotated tag for the version, of the form `v[x].[y].[z]`, include at least the version in the tag message. On the command line this can be done with a command like `git tag -a v1.2.3 -m "1.2.3 some info about this version"`
 9. Push the tag to github with a command like: `git push origin v1.2.3`.
-10. Use https://github.com/concord-consortium/starter-projects/releases to make this tag into a GitHub release.
-11. Run the release workflow to update http://starter-projects.concord.org/index.html. 
-    1. Navigate to the actions page in GitHub and the click the "Release" workflow. This should take you to this page: https://github.com/concord-consortium/starter-projects/actions/workflows/release.yml. 
-    2. Click the "Run workflow" menu button. 
+10. Use https://github.com/concord-consortium/graph-performance-benchmarks/releases to make this tag into a GitHub release.
+11. Run the release workflow to update http://graph-performance-benchmarks.concord.org/index.html.
+    1. Navigate to the actions page in GitHub and the click the "Release" workflow. This should take you to this page: https://github.com/concord-consortium/graph-performance-benchmarks/actions/workflows/release.yml.
+    2. Click the "Run workflow" menu button.
     3. Type in the tag name you want to release for example `v1.2.3`.  (Note this won't work until the PR has been merged to master)
     4. Click the `Run Workflow` button.
 
@@ -142,6 +142,6 @@ Inside of your `package.json` file:
 
 ## License
 
-Starter Projects are Copyright 2018 (c) by the Concord Consortium and is distributed under the [MIT license](http://www.opensource.org/licenses/MIT).
+Graph Performance Benchmarks are Copyright 2018 (c) by the Concord Consortium and is distributed under the [MIT license](http://www.opensource.org/licenses/MIT).
 
 See license.md for the complete license text.
