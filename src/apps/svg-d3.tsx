@@ -1,4 +1,4 @@
-import { IPoint, getRandomPoints, getSVGElement, shiftPoints, nextFrame, benchmark } from "./shared";
+import { IPoint, getRandomPoints, getSVGElement, shiftPoints, nextFrame, benchmark } from "../shared";
 import * as d3 from "d3";
 
 export const AppSVGD3 = {

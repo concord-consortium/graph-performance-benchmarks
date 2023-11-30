@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { HEIGHT, IPoint, WIDTH, getRandomPoints, shiftPoints, nextFrame, benchmark } from "./shared";
+import { HEIGHT, IPoint, WIDTH, getRandomPoints, shiftPoints, nextFrame, benchmark } from "../shared";
 import { observer } from "mobx-react-lite";
 import { action, makeObservable, observable } from "mobx";
 

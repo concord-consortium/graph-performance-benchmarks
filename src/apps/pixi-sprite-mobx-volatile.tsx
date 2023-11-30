@@ -1,26 +1,22 @@
 import * as PIXI from "pixi.js";
-import { getRandomPoints, shiftPoints, nextFrame, getCanvas, WIDTH, HEIGHT, benchmark } from "./shared";
-import { autorun } from "mobx";
-import { types } from "mobx-state-tree";
+import { getRandomPoints, shiftPoints, nextFrame, getCanvas, WIDTH, HEIGHT, benchmark, IPoint } from "../shared";
+import { autorun, makeObservable, observable, action } from "mobx";
 
-const Point = types.model({
-  id: types.identifier,
-  x: types.number,
-  y: types.number
-});
-
-// Define a store just like a model
-const PointsStore = types.model({
-  points: types.array(Point),
-}).actions(self => ({
-  shiftPoints() {
-    shiftPoints(self.points);
+class PointsStore {
+  @observable pointsUpdateFlag = 0;
+  points: IPoint[] = getRandomPoints();
+  constructor() {
+    makeObservable(this);
   }
-}));
+  @action shiftPoints() {
+    shiftPoints(this.points);
+    this.pointsUpdateFlag++;
+  }
+}
 
-export const AppPixiSpriteMST = {
+export const AppPixiSpriteMobxVolatile = {
   main: () => {
-    const store = PointsStore.create({ points: getRandomPoints() });
+    const store = new PointsStore();
     const animate = () => {
       store.shiftPoints();
       nextFrame(animate);
@@ -50,10 +46,14 @@ export const AppPixiSpriteMST = {
     sprites.forEach(sprite => app.stage.addChild(sprite));
 
     autorun(() => {
+      // eslint-disable-next-line no-unused-expressions
+      store.pointsUpdateFlag; // This is needed to make sure the component re-renders when the points change.
+
       for (let i = 0; i < store.points.length; i++) {
         sprites[i].x = store.points[i].x;
         sprites[i].y = store.points[i].y;
       }
+
       benchmark();
     });
   }

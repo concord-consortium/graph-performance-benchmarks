@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { HEIGHT, IPoint, WIDTH, getRandomPoints, shiftPoints, nextFrame, cancelFrame, benchmark } from "./shared";
+import { HEIGHT, IPoint, WIDTH, getRandomPoints, shiftPoints, nextFrame, cancelFrame, benchmark } from "../shared";
 
 export const AppSVGReactStateRefs = () => {
   const frameRef = useRef<number>(0);

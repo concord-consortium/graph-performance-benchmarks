@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { HEIGHT, IPoint, WIDTH, getRandomPoints, shiftPoints, nextFrame, cancelFrame, benchmark } from "./shared";
+import { HEIGHT, IPoint, WIDTH, getRandomPoints, shiftPoints, nextFrame, cancelFrame, benchmark } from "../shared";
 
 export const AppCanvasReact = () => {
   const frameRef = useRef<number>(0);

@@ -1,19 +1,17 @@
-import { IPoint, getRandomPoints, getSVGElement, shiftPoints, nextFrame, benchmark } from "./shared";
+import { IPoint, getRandomPoints, getSVGElement, shiftPoints, nextFrame, benchmark } from "../shared";
 import { autorun, makeObservable, observable, action } from "mobx";
 
 class PointsStore {
-  @observable pointsUpdateFlag = 0;
-  points: IPoint[] = getRandomPoints();
+  @observable points: IPoint[] = getRandomPoints();
   constructor() {
     makeObservable(this);
   }
   @action shiftPoints() {
     shiftPoints(this.points);
-    this.pointsUpdateFlag++;
   }
 }
 
-export const AppSVGMobxVolatile = {
+export const AppSVGMobx = {
   main: () => {
     const svg = getSVGElement();
     const store = new PointsStore();
@@ -35,15 +33,11 @@ export const AppSVGMobxVolatile = {
     }
 
     autorun(() => {
-      // eslint-disable-next-line no-unused-expressions
-      store.pointsUpdateFlag; // This is needed to make sure the component re-renders when the points change.
-
       for (let i = 0; i < store.points.length; i++) {
         const circle = svg.children[i] as SVGCircleElement;
         circle.setAttribute("cx", store.points[i].x.toString());
         circle.setAttribute("cy", store.points[i].y.toString());
       }
-
       benchmark();
     });
   }

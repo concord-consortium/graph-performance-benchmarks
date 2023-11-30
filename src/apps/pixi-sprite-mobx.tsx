@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import { getRandomPoints, shiftPoints, nextFrame, getCanvas, WIDTH, HEIGHT, benchmark, IPoint } from "./shared";
+import { getRandomPoints, shiftPoints, nextFrame, getCanvas, WIDTH, HEIGHT, benchmark, IPoint } from "../shared";
 import { autorun, makeObservable, observable, action } from "mobx";
 
 class PointsStore {

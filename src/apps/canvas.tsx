@@ -1,4 +1,4 @@
-import { getRandomPoints, shiftPoints, nextFrame, getCanvas, benchmark } from "./shared";
+import { getRandomPoints, shiftPoints, nextFrame, getCanvas, benchmark } from "../shared";
 
 export const AppCanvas = {
   main: () => {

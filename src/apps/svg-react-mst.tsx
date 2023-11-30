@@ -1,34 +1,35 @@
 import React, { useEffect } from "react";
-import { HEIGHT, IPoint, WIDTH, getRandomPoints, shiftPoints, nextFrame, benchmark } from "./shared";
+import { HEIGHT, IPoint, WIDTH, getRandomPoints, shiftPoints, nextFrame, benchmark } from "../shared";
 import { types } from "mobx-state-tree";
 import { observer } from "mobx-react-lite";
 
+const Point = types.model({
+  id: types.identifier,
+  x: types.number,
+  y: types.number
+});
+
+// Define a store just like a model
 const PointsStore = types.model({
-  pointsUpdateFlag: 0
-}).volatile(self => ({
-  points: getRandomPoints(),
-})).actions(self => ({
+  points: types.array(Point),
+}).actions(self => ({
   shiftPoints() {
     shiftPoints(self.points);
-    self.pointsUpdateFlag++;
   }
 }));
 
-const store = PointsStore.create({});
+const store = PointsStore.create({
+  points: getRandomPoints()
+});
 const animate = () => {
   store.shiftPoints();
   nextFrame(animate);
 };
 
-export const AppSVGReactMSTVolatile = observer(() => {
+export const AppSVGReactMST = observer(() => {
   useEffect(() => {
     animate();
   }, []);
-
-  // eslint-disable-next-line no-unused-expressions
-  store.pointsUpdateFlag; // This is needed to make sure the component re-renders when the points change.
-
-  benchmark();
 
   return (
     <div className="app">
@@ -43,13 +44,16 @@ export const AppSVGReactMSTVolatile = observer(() => {
   );
 });
 
-const PointComp = ({ point }: { point: IPoint }) => (
-  <circle
+const PointComp = observer(({ point }: { point: IPoint }) => {
+  if (point.id === "id-0") {
+    benchmark();
+  }
+  return <circle
     r="2"
     fill="#333"
     strokeWidth="0.5"
     stroke="#ffa1a1"
     cx={point.x}
     cy={point.y}
-  />
-);
+  />;
+});

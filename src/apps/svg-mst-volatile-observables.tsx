@@ -1,4 +1,4 @@
-import { getRandomPoints, shiftPoints, nextFrame, getSVGElement, benchmark } from "./shared";
+import { getRandomPoints, shiftPoints, nextFrame, getSVGElement, benchmark } from "../shared";
 import { types } from "mobx-state-tree";
 import { autorun } from "mobx";
 

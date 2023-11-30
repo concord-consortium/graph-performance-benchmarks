@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import { getRandomPoints, shiftPoints, nextFrame, getCanvas, WIDTH, HEIGHT, benchmark } from "./shared";
+import { getRandomPoints, shiftPoints, nextFrame, getCanvas, WIDTH, HEIGHT, benchmark } from "../shared";
 import { autorun } from "mobx";
 import { types } from "mobx-state-tree";
 

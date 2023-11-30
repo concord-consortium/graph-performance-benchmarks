@@ -1,18 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
-import { HEIGHT, IPoint, WIDTH, getRandomPoints, shiftPoints, nextFrame, cancelFrame, benchmark } from "./shared";
+import { HEIGHT, IPoint, WIDTH, getRandomPoints, shiftPoints, nextFrame, cancelFrame, benchmark } from "../shared";
 
-export const AppSVGReactComponents = () => {
+export const AppSVGReactComponentsWrong = () => {
   const frameRef = useRef<number>(0);
   const [points, setPoints] = useState<IPoint[]>(getRandomPoints);
 
   useEffect(() => {
     const animate = () => {
-      setPoints(oldPoints => shiftPoints(oldPoints.slice()));
+      const newPoints = points.slice();
+      shiftPoints(newPoints);
+      setPoints(newPoints);
       frameRef.current = nextFrame(animate);
     };
     animate();
     return () => cancelFrame(frameRef.current);
-  }, []);
+  }, [points]);
 
   benchmark();
 

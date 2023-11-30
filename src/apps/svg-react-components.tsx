@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import { HEIGHT, IPoint, WIDTH, getRandomPoints, shiftPoints, nextFrame, cancelFrame, benchmark } from "./shared";
+import { HEIGHT, IPoint, WIDTH, getRandomPoints, shiftPoints, nextFrame, cancelFrame, benchmark } from "../shared";
 
-export const AppSVGReactPointComponents = () => {
+export const AppSVGReactComponents = () => {
   const frameRef = useRef<number>(0);
   const [points, setPoints] = useState<IPoint[]>(getRandomPoints);
 
@@ -21,21 +21,18 @@ export const AppSVGReactPointComponents = () => {
       <svg width={WIDTH} height={HEIGHT}>
         {
           points.map((point, i) => (
-            <Point key={i} point={point} />
+            <circle
+              key={i}
+              r="2"
+              fill="#333"
+              strokeWidth="0.5"
+              stroke="#ffa1a1"
+              cx={point.x}
+              cy={point.y}
+            />
           ))
         }
       </svg>
     </div>
   );
 };
-
-const Point = ({ point }: { point: IPoint }) => (
-  <circle
-    r="2"
-    fill="#333"
-    strokeWidth="0.5"
-    stroke="#ffa1a1"
-    cx={point.x}
-    cy={point.y}
-  />
-);

@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
-import { HEIGHT, IPoint, WIDTH, getRandomPoints, shiftPoints, nextFrame, benchmark } from "./shared";
+import { HEIGHT, IPoint, WIDTH, getRandomPoints, shiftPoints, nextFrame, benchmark } from "../shared";
 import { makeObservable, observable, action } from "mobx";
 import { observer } from "mobx-react-lite";
 
-// Note that this variant can be really fasts when relatively small number of points gets updated each frame,
-// as each Point component is observing only a single data point. However, when all points are updated each frame, this
-// variant can be a bit slower than the previous one.
+// We probably don't want to design apps like this, but it's interesting to see how fast it can be. svg-react-mobx-2 is
+// probably a better approach, especially when it's not known how many points will be updated each frame.
 
 class PointsStore {
   @observable points: IPoint[] = getRandomPoints();
@@ -15,7 +14,9 @@ class PointsStore {
   }
 
   @action shiftPoints() {
-    shiftPoints(this.points);
+    const newPoints = this.points.slice();
+    shiftPoints(newPoints);
+    this.points = newPoints;
   }
 }
 
@@ -25,10 +26,12 @@ const animate = () => {
   nextFrame(animate);
 };
 
-export const AppSVGReactMobx2 = observer(() => {
+export const AppSVGReactMobx = observer(() => {
   useEffect(() => {
     animate();
   }, []);
+
+  benchmark();
 
   return (
     <div className="app">
@@ -43,16 +46,15 @@ export const AppSVGReactMobx2 = observer(() => {
   );
 });
 
-const Point = observer(({ point }: { point: IPoint }) => {
-  if (point.id === "id-0") {
-    benchmark();
-  }
-  return <circle
+// Note that `observer` is omitted here on purpose, as it would make the app slower. However, it might not be a good
+// idea in real-world apps.
+const Point = ({ point }: { point: IPoint }) => (
+  <circle
     r="2"
     fill="#333"
     strokeWidth="0.5"
     stroke="#ffa1a1"
     cx={point.x}
     cy={point.y}
-  />;
-});
+  />
+);
